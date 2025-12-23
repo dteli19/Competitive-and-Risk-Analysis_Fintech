@@ -216,22 +216,6 @@ elif section == "Sentiment Analysis":
         caption="VADER sentiment summary (image: VADER.png)",
     )
 
-    # Optional: if you still have the two sentiment charts
-    with st.expander("Optional extra sentiment charts (if present)"):
-        c1, c2 = st.columns(2)
-        with c1:
-            show_image_or_placeholder(
-                IMG_SENT_1,
-                "📈 sentiment_chart_1.png placeholder",
-                caption="Average sentiment by app",
-            )
-        with c2:
-            show_image_or_placeholder(
-                IMG_SENT_2,
-                "📊 sentiment_chart_2.png placeholder",
-                caption="Sentiment distribution",
-            )
-
 elif section == "Regulation & Bitcoin":
     st.markdown(
         """
