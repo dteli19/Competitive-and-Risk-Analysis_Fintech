@@ -1,6 +1,10 @@
 # app.py
-# Final Streamlit app (images stored in the repo root / main branch)
+# Final Streamlit app (images stored in repo root / main branch)
 # Expected files in the same folder as this app.py:
+# - Bets.png              (shown below Bitcoin beta table)
+# - Volatility.png        (shown below volatility table)
+# - VADER.png             (shown below sentiment section)
+# Optional (if you still want them):
 # - sentiment_chart_1.png
 # - sentiment_chart_2.png
 
@@ -51,6 +55,12 @@ st.markdown(
 # Paths (images in repo root)
 # ----------------------------
 BASE_DIR = Path(__file__).resolve().parent
+
+IMG_BETS = BASE_DIR / "Bets.png"
+IMG_VOL = BASE_DIR / "Volatility.png"
+IMG_VADER = BASE_DIR / "VADER.png"
+
+# Optional images (if present)
 IMG_SENT_1 = BASE_DIR / "sentiment_chart_1.png"
 IMG_SENT_2 = BASE_DIR / "sentiment_chart_2.png"
 
@@ -79,6 +89,17 @@ btc_beta_df = pd.DataFrame(
     columns=["Company", "Bitcoin Beta", "Interpretation"],
 )
 
+volatility_df = pd.DataFrame(
+    [
+        ["COIN", "Highest", "Most sensitive to crypto market shocks"],
+        ["HOOD", "High", "Driven by retail trading volatility"],
+        ["SQ", "Moderate", "Hybrid fintech-crypto behavior"],
+        ["BTC", "Moderate-high", "Crypto asset cyclicality"],
+        ["PYPL", "Lowest", "Traditional fintech with limited crypto shocks"],
+    ],
+    columns=["Asset", "Relative volatility level", "Interpretation"],
+)
+
 sentiment_df = pd.DataFrame(
     [
         ["Cash App", 72.65, "Strong UX, rewards, investing and Bitcoin features"],
@@ -97,7 +118,10 @@ def show_image_or_placeholder(path: Path, placeholder_text: str, caption: str | 
     if path.exists():
         st.image(str(path), caption=caption, use_container_width=True)
     else:
-        st.markdown(f'<div class="placeholder">{placeholder_text}<br><br><b>Missing:</b> {path.name}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="placeholder">{placeholder_text}<br><br><b>Missing:</b> {path.name}</div>',
+            unsafe_allow_html=True,
+        )
 
 # ----------------------------
 # Sidebar navigation
@@ -140,11 +164,6 @@ if section == "Overview":
         unsafe_allow_html=True,
     )
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Ticker", "SQ")
-    c2.metric("Positioning", "Hybrid fintech + Bitcoin rails")
-    c3.metric("Sentiment leader", "Cash App")
-
 elif section == "Problem Statement":
     st.markdown(
         """
@@ -164,43 +183,60 @@ elif section == "Block & Products":
     st.dataframe(products_df, use_container_width=True, hide_index=True)
 
 elif section == "Competitive Analysis":
-    st.subheader("Bitcoin Exposure and Risk Positioning")
+    st.subheader("Competitive Analysis")
+
+    st.markdown("### Bitcoin beta comparison")
     st.dataframe(btc_beta_df, use_container_width=True, hide_index=True)
 
-    col1, col2 = st.columns(2)
+    st.markdown("#### Bitcoin beta chart")
+    show_image_or_placeholder(
+        IMG_BETS,
+        "📊 Bitcoin beta chart placeholder (Bets.png)",
+        caption="Bitcoin beta chart (image: Bets.png)",
+    )
 
-    with col1:
-        show_image_or_placeholder(
-            IMG_SENT_1,
-            "📈 Average Sentiment by App",
-            caption="Average VADER sentiment by app",
-        )
+    st.markdown("### Volatility comparison")
+    st.dataframe(volatility_df, use_container_width=True, hide_index=True)
 
-    with col2:
-        show_image_or_placeholder(
-            IMG_SENT_2,
-            "📊 Sentiment Distribution (Positive / Neutral / Negative)",
-            caption="Sentiment distribution across apps",
-        )
-    
+    st.markdown("#### Volatility chart")
+    show_image_or_placeholder(
+        IMG_VOL,
+        "📈 Volatility chart placeholder (Volatility.png)",
+        caption="Volatility chart (image: Volatility.png)",
+    )
+
 elif section == "Sentiment Analysis":
     st.subheader("Cash App Sentiment Analysis (Google Play Reviews)")
     st.dataframe(sentiment_df, use_container_width=True, hide_index=True)
 
-    st.markdown("### Chart Placeholder (optional)")
-    st.markdown(
-        '<div class="placeholder">📊 Add normalized price / volatility charts here if needed</div>',
-        unsafe_allow_html=True,
+    st.markdown("#### VADER sentiment figure")
+    show_image_or_placeholder(
+        IMG_VADER,
+        "🧠 VADER sentiment chart placeholder (VADER.png)",
+        caption="VADER sentiment summary (image: VADER.png)",
     )
-    
-    st.markdown("### Sentiment Charts (images in repo root)")
-    
+
+    # Optional: if you still have the two sentiment charts
+    with st.expander("Optional extra sentiment charts (if present)"):
+        c1, c2 = st.columns(2)
+        with c1:
+            show_image_or_placeholder(
+                IMG_SENT_1,
+                "📈 sentiment_chart_1.png placeholder",
+                caption="Average sentiment by app",
+            )
+        with c2:
+            show_image_or_placeholder(
+                IMG_SENT_2,
+                "📊 sentiment_chart_2.png placeholder",
+                caption="Sentiment distribution",
+            )
 
 elif section == "Regulation & Bitcoin":
     st.markdown(
         """
         <div class="card">
-        <b>Regulation, Consumer Protection & Bitcoin Strategy</b><br><br>
+        <b>Regulation, Consumer Protection and Bitcoin Strategy</b><br><br>
         Block faced regulatory scrutiny related to AML and fraud controls, resulting in significant penalties.
         In response, the firm implemented scam reimbursements, improved fraud monitoring, and stricter identity
         verification. Block’s Bitcoin-first strategy focuses on regulated, trust-based access rather than broad
@@ -226,5 +262,4 @@ elif section == "Key Takeaways":
     )
 
 st.markdown("---")
-st.caption("Fast loading app • Images expected in repo root (same folder as app.py)")
-
+st.caption("Fast loading app • Images expected in repo root: Bets.png, Volatility.png, VADER.png")
