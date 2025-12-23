@@ -1,5 +1,4 @@
-# Block, Inc. (SQ) - AFT Report and Presentation  
-**Analytics for Finance | Competitive, Risk, and Sentiment Analysis**
+# Block, Inc. (SQ) - Analytics for Finance | Competitive, Risk, and Sentiment Analysis
 
 ## Overview  
 This project analyzes **Block, Inc. (NYSE: SQ)** as a hybrid fintech company operating across merchant payments, consumer finance, and Bitcoin-focused infrastructure. We combine **market-based analytics (returns, volatility, beta)** with **product and strategy analysis**, and complement it with **consumer sentiment analysis** of Cash App and competing payment apps using Google Play reviews (2023 to 2025).
