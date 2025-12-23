@@ -1,16 +1,13 @@
 # app.py
-# Streamlit app for the Block Inc AFT project README
+# Fast Streamlit app for Block Inc AFT project
 # Run: streamlit run app.py
 
-import os
 from pathlib import Path
-
-import pandas as pd
 import streamlit as st
-
+import pandas as pd
 
 # ----------------------------
-# Page config and light styling
+# Page config
 # ----------------------------
 st.set_page_config(
     page_title="Block, Inc. (SQ) | AFT Project",
@@ -18,30 +15,9 @@ st.set_page_config(
     layout="wide",
 )
 
-st.markdown(
-    """
-    <style>
-      .main .block-container { padding-top: 1.6rem; padding-bottom: 2rem; }
-      h1, h2, h3 { letter-spacing: 0.2px; }
-      .small-muted { color: rgba(250,250,250,0.65); font-size: 0.92rem; }
-      .card {
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 14px;
-        padding: 14px 14px 8px 14px;
-        background: rgba(255,255,255,0.02);
-      }
-      .kpi {
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 14px;
-        padding: 14px;
-        background: rgba(255,255,255,0.02);
-        height: 100%;
-      }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
+# ----------------------------
+# Paths
+# ----------------------------
 BASE_DIR = Path(__file__).resolve().parent
 ASSETS_DIR = BASE_DIR / "readme_assets"
 IMG_1 = ASSETS_DIR / "sentiment_chart_1.png"
@@ -51,222 +27,150 @@ PDF_PATH = BASE_DIR / "Group 5_AFT Group Project.pdf"
 PPT_PATH = BASE_DIR / "Group_5_Block Inc_ AFT.pptx"
 NB_PATH = BASE_DIR / "AFT_Group_Project_Updated.ipynb"
 
+# ----------------------------
+# Light CSS (kept minimal)
+# ----------------------------
+st.markdown(
+    """
+    <style>
+      .main .block-container { padding-top: 1.2rem; padding-bottom: 2rem; }
+      .card { border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 14px; }
+      .muted { color: rgba(0,0,0,0.6); }
+      @media (prefers-color-scheme: dark){
+        .card { border: 1px solid rgba(255,255,255,0.12); }
+        .muted { color: rgba(255,255,255,0.65); }
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 # ----------------------------
-# Data (tables from README)
+# Tables (static, fast)
 # ----------------------------
 products_df = pd.DataFrame(
     [
-        {
-            "Platform / Business": "Square (Seller ecosystem)",
-            "What it does": "POS, payment processing, vertical SaaS (payroll, marketing, inventory), Square Banking",
-            "Why it matters strategically": "Stable GPV-driven cash flows and merchant switching costs",
-        },
-        {
-            "Platform / Business": "Cash App (Consumer super-app)",
-            "What it does": "P2P, banking-lite, Cash Card and Boosts, investing, Bitcoin trading, tax filing",
-            "Why it matters strategically": "Engagement and monetization across interchange, instant deposit fees, and spreads",
-        },
-        {
-            "Platform / Business": "Afterpay (BNPL)",
-            "What it does": "Pay-in-4 and merchant-integrated BNPL",
-            "Why it matters strategically": "Links consumer demand to the merchant network and expands credit products",
-        },
-        {
-            "Platform / Business": "TIDAL (Creator tools)",
-            "What it does": "Music streaming and creator monetization tools",
-            "Why it matters strategically": "Supports the broader economic empowerment narrative",
-        },
-        {
-            "Platform / Business": "Spiral and TBD (Bitcoin infrastructure)",
-            "What it does": "Open-source Bitcoin tools, Lightning development, decentralized identity and payments protocols",
-            "Why it matters strategically": "Positions Block as a builder of long-term Bitcoin rails, not only a trading platform",
-        },
-        {
-            "Platform / Business": "Bitcoin hardware and mining",
-            "What it does": "ASIC chips, mining rigs, self-custody wallet initiatives",
-            "Why it matters strategically": "Optionality via hardware revenue, pool fees, and lower execution costs for BTC trades",
-        },
-    ]
+        ["Square (Seller ecosystem)", "POS + payments + SaaS + banking tools", "Stable GPV-driven cash flows and switching costs"],
+        ["Cash App (Consumer super-app)", "P2P + banking-lite + Cash Card + investing + Bitcoin", "Engagement-led monetization across fees and spreads"],
+        ["Afterpay (BNPL)", "Pay-in-4 BNPL", "Connects consumer demand with merchants; expands credit products"],
+        ["TIDAL (Creator tools)", "Music streaming + creator monetization", "Supports economic empowerment narrative"],
+        ["Spiral + TBD (Bitcoin infra)", "Open-source Bitcoin tools + identity/payment protocols", "Long-term Bitcoin rails strategy"],
+        ["Bitcoin hardware and mining", "ASIC chips + mining rigs + self-custody", "Optionality: hardware revenue + lower BTC execution costs"],
+    ],
+    columns=["Platform / Business", "What it does", "Why it matters strategically"],
 )
 
 business_model_df = pd.DataFrame(
     [
-        {
-            "Company": "Block (SQ)",
-            "Core model": "Seller payments, consumer finance, Bitcoin infrastructure",
-            "Primary customer": "SMBs and underbanked or Gen Z consumers",
-            "Role of crypto in strategy": "Central pillar (BTC trading, infrastructure, mining initiatives)",
-        },
-        {
-            "Company": "PayPal (PYPL)",
-            "Core model": "Global payments network",
-            "Primary customer": "Merchants and mainstream consumers",
-            "Role of crypto in strategy": "Minimal (buy and sell only)",
-        },
-        {
-            "Company": "Coinbase (COIN)",
-            "Core model": "Crypto exchange",
-            "Primary customer": "Retail traders and institutions",
-            "Role of crypto in strategy": "Core business (high cycle sensitivity)",
-        },
-        {
-            "Company": "Robinhood (HOOD)",
-            "Core model": "Retail brokerage",
-            "Primary customer": "Young retail investors",
-            "Role of crypto in strategy": "Material, mixed with equities and options cycles",
-        },
-    ]
+        ["Block (SQ)", "Seller payments + consumer finance + Bitcoin infra", "SMBs + underbanked/Gen Z consumers", "Central pillar (BTC trading + infra + mining)"],
+        ["PayPal (PYPL)", "Global payments network", "Merchants + mainstream consumers", "Minimal crypto (buy/sell only)"],
+        ["Coinbase (COIN)", "Crypto exchange", "Retail traders + institutions", "Core business depends on crypto cycles"],
+        ["Robinhood (HOOD)", "Retail brokerage", "Young retail investors", "Material crypto exposure, plus equity/options cycles"],
+    ],
+    columns=["Company", "Core model", "Primary customer", "Role of crypto in strategy"],
 )
 
 btc_beta_df = pd.DataFrame(
     [
-        {"Company": "COIN", "Estimated Bitcoin Beta (range)": "0.6 to 0.8", "Interpretation": "Strongly linked to BTC cycles"},
-        {"Company": "HOOD", "Estimated Bitcoin Beta (range)": "0.25 to 0.30", "Interpretation": "Moderate exposure via retail crypto activity"},
-        {"Company": "SQ", "Estimated Bitcoin Beta (range)": "0.15 to 0.20", "Interpretation": "Meaningful BTC linkage, partially insulated by non-BTC revenue"},
-        {"Company": "PYPL", "Estimated Bitcoin Beta (range)": "0.0", "Interpretation": "Mostly independent of BTC cycles"},
-    ]
+        ["COIN", "0.6 to 0.8", "Strongly linked to BTC cycles"],
+        ["HOOD", "0.25 to 0.30", "Moderate exposure via retail crypto activity"],
+        ["SQ", "0.15 to 0.20", "Meaningful BTC linkage, partially insulated by non-BTC revenue"],
+        ["PYPL", "0.0", "Mostly independent of BTC cycles"],
+    ],
+    columns=["Company", "Estimated Bitcoin Beta (range)", "Interpretation"],
 )
 
 volatility_df = pd.DataFrame(
     [
-        {"Asset": "COIN", "Relative volatility level": "Highest", "What it implies": "Most sensitive to crypto market shocks"},
-        {"Asset": "HOOD", "Relative volatility level": "High", "What it implies": "Retail trading cycle exposure"},
-        {"Asset": "SQ", "Relative volatility level": "Moderate", "What it implies": "Hybrid fintech and crypto behavior"},
-        {"Asset": "BTC", "Relative volatility level": "Moderate-high", "What it implies": "Crypto asset cyclicality"},
-        {"Asset": "PYPL", "Relative volatility level": "Lowest", "What it implies": "Mature payments platform stability"},
-    ]
+        ["COIN", "Highest", "Most sensitive to crypto market shocks"],
+        ["HOOD", "High", "Retail trading cycle exposure"],
+        ["SQ", "Moderate", "Hybrid fintech and crypto behavior"],
+        ["BTC", "Moderate-high", "Crypto asset cyclicality"],
+        ["PYPL", "Lowest", "Mature payments platform stability"],
+    ],
+    columns=["Asset", "Relative volatility level", "What it implies"],
 )
 
 sentiment_df = pd.DataFrame(
     [
-        {"App": "Cash App", "Avg VADER (compound)": 0.37, "Positive %": 72.65, "Neutral %": 14.0, "Negative %": 13.0},
-        {"App": "Google Pay", "Avg VADER (compound)": 0.27, "Positive %": 69.25, "Neutral %": 15.0, "Negative %": 15.0},
-        {"App": "PayPal", "Avg VADER (compound)": 0.23, "Positive %": 62.25, "Neutral %": 17.0, "Negative %": 21.0},
-        {"App": "Venmo", "Avg VADER (compound)": 0.22, "Positive %": 60.90, "Neutral %": 14.0, "Negative %": 25.0},
-        {"App": "Zelle", "Avg VADER (compound)": 0.19, "Positive %": 54.75, "Neutral %": 21.0, "Negative %": 24.0},
-    ]
+        ["Cash App", 0.37, 72.65, 14.0, 13.0],
+        ["Google Pay", 0.27, 69.25, 15.0, 15.0],
+        ["PayPal", 0.23, 62.25, 17.0, 21.0],
+        ["Venmo", 0.22, 60.90, 14.0, 25.0],
+        ["Zelle", 0.19, 54.75, 21.0, 24.0],
+    ],
+    columns=["App", "Avg VADER (compound)", "Positive %", "Neutral %", "Negative %"],
 )
 
 penalties_df = pd.DataFrame(
     [
-        {"Category": "Consumer refunds", "Amount (USD)": 120_000_000, "What it reflects": "Unresolved transaction alerts and consumer protection gaps"},
-        {"Category": "State regulators (AML)", "Amount (USD)": 80_000_000, "What it reflects": "Weak AML controls and risk rating issues"},
-        {"Category": "New York DFS", "Amount (USD)": 40_000_000, "What it reflects": "Broader crypto oversight failures"},
-        {"Category": "Total", "Amount (USD)": 255_000_000, "What it reflects": "Compliance investment became unavoidable at scale"},
-    ]
+        ["Consumer refunds", 120_000_000, "Transaction alerts + consumer protection gaps"],
+        ["State regulators (AML)", 80_000_000, "AML controls and risk rating issues"],
+        ["New York DFS", 40_000_000, "Crypto oversight failures"],
+        ["Total", 255_000_000, "Compliance investment at scale"],
+    ],
+    columns=["Category", "Amount (USD)", "What it reflects"],
 )
 
 takeaways = [
     "Block sits between fintech and crypto-native peers with moderate BTC sensitivity and moderate volatility.",
     "Diversification across Square and Cash App partially insulates Block from pure crypto cycles.",
     "Cash App shows the strongest consumer sentiment, supporting a product-led advantage.",
-    "Regulatory pressure is a strategic variable. Compliance and consumer protection can differentiate Block if rules tighten.",
-    "Bitcoin mining and infrastructure are a long-term optionality play, not only a trading feature.",
+    "Regulatory pressure is a strategic variable; compliance can differentiate Block as rules tighten.",
+    "Bitcoin mining and infrastructure provide long-term optionality, not just trading exposure.",
 ]
 
-
 # ----------------------------
-# Helpers
-# ----------------------------
-def file_badge(path: Path, label: str):
-    if path.exists():
-        st.success(f"{label} found: {path.name}")
-    else:
-        st.warning(f"{label} not found: {path.name}")
-
-
-def try_show_image(path: Path, caption: str):
-    if path.exists():
-        st.image(str(path), caption=caption, use_container_width=True)
-    else:
-        st.info(f"Image not found: {path.as_posix()}")
-
-
-# ----------------------------
-# Sidebar nav
+# Sidebar
 # ----------------------------
 st.sidebar.title("Navigation")
 section = st.sidebar.radio(
     "Go to",
     [
         "Overview",
-        "Problem Statement",
-        "Block and Its Products",
+        "Products",
         "Competitive Analysis",
-        "Cash App Sentiment Analysis",
-        "Regulation and Consumer Protection",
-        "Bitcoin Strategy",
+        "Sentiment Analysis",
+        "Regulation",
         "Key Takeaways",
-        "Project Files",
+        "Downloads",
     ],
 )
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("**Assets check**")
-st.sidebar.caption("Place images in: readme_assets/")
-file_badge(IMG_1, "sentiment_chart_1.png")
-file_badge(IMG_2, "sentiment_chart_2.png")
-
 
 # ----------------------------
 # Header
 # ----------------------------
-st.title("Block, Inc. (SQ) | AFT Project Dashboard")
-st.markdown(
-    '<div class="small-muted">Competitive, risk, and sentiment analysis using market data, peer benchmarking, and Google Play review sentiment.</div>',
-    unsafe_allow_html=True,
-)
+st.title("Block, Inc. (SQ) | AFT Project")
+st.markdown('<div class="muted">Fast summary app: tables + charts + downloads.</div>', unsafe_allow_html=True)
 st.markdown("---")
 
-
 # ----------------------------
-# Sections
+# Pages
 # ----------------------------
 if section == "Overview":
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown('<div class="kpi"><b>Company</b><br>Block, Inc. (NYSE: SQ)</div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="kpi"><b>Positioning</b><br>Hybrid fintech plus Bitcoin infrastructure</div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown('<div class="kpi"><b>Methods</b><br>Returns, volatility, beta, sentiment, regulation</div>', unsafe_allow_html=True)
-
     st.markdown(
         """
         <div class="card">
-        <b>What this project does</b><br><br>
-        Block operates across merchant payments (Square), consumer finance (Cash App), and Bitcoin-focused initiatives
-        (Spiral, TBD, mining hardware). This dashboard summarizes the AFT analysis by combining:
-        <ul>
-          <li>Market behavior: normalized returns, volatility, and Bitcoin beta</li>
-          <li>Business strategy: ecosystem products and competitive positioning</li>
-          <li>Customer voice: sentiment analysis from Google Play reviews (2023 to 2025)</li>
-          <li>Governance: regulation, consumer protection, and compliance response</li>
-        </ul>
+        <b>Overview</b><br><br>
+        This project analyzes Block, Inc. as a hybrid fintech platform (Square + Cash App) with intentional Bitcoin exposure.
+        We combine competitive benchmarking (peers), Bitcoin beta and volatility insights, consumer sentiment for Cash App,
+        and the impact of regulation and consumer protection.
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-elif section == "Problem Statement":
-    st.subheader("Problem Statement")
-    st.write(
-        """
-        1. Where does Block sit on the spectrum between traditional fintech and crypto-native firms?  
-        2. How sensitive is Block to Bitcoin price movements (Bitcoin beta) and how does its volatility compare to peers?  
-        3. Do Cash App user reviews indicate a competitive advantage in product experience and trust?  
-        4. How do regulation and consumer protection shape Block’s strategic direction and risk profile?
-        """
-    )
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Ticker", "SQ")
+    col2.metric("Positioning", "Hybrid fintech + Bitcoin rails")
+    col3.metric("Sentiment leader", "Cash App")
 
-elif section == "Block and Its Products":
+elif section == "Products":
     st.subheader("Block and Its Products")
     st.dataframe(products_df, use_container_width=True, hide_index=True)
 
 elif section == "Competitive Analysis":
     st.subheader("Competitive Analysis")
-
     st.markdown("### Business model comparison")
     st.dataframe(business_model_df, use_container_width=True, hide_index=True)
 
@@ -276,99 +180,51 @@ elif section == "Competitive Analysis":
     st.markdown("### Volatility positioning")
     st.dataframe(volatility_df, use_container_width=True, hide_index=True)
 
-elif section == "Cash App Sentiment Analysis":
-    st.subheader("Cash App Sentiment Analysis (Google Play Reviews, 2023 to 2025)")
-    st.write(
-        "Sentiment was scored using a VADER-based NLP pipeline on Google Play reviews to compare Cash App with peer apps."
-    )
-
-    st.markdown("### Summary table")
+elif section == "Sentiment Analysis":
+    st.subheader("Cash App Sentiment Analysis (2023 to 2025)")
     st.dataframe(sentiment_df, use_container_width=True, hide_index=True)
 
-    st.markdown("### Charts from the notebook output")
-    colA, colB = st.columns(2)
-    with colA:
-        try_show_image(IMG_1, "Average VADER sentiment by app")
-    with colB:
-        try_show_image(IMG_2, "Sentiment distribution (Positive, Neutral, Negative)")
+    st.markdown("### Charts")
+    c1, c2 = st.columns(2)
 
-elif section == "Regulation and Consumer Protection":
+    with c1:
+        if IMG_1.exists():
+            st.image(str(IMG_1), use_container_width=True)
+        else:
+            st.info("Missing image: readme_assets/sentiment_chart_1.png")
+
+    with c2:
+        if IMG_2.exists():
+            st.image(str(IMG_2), use_container_width=True)
+        else:
+            st.info("Missing image: readme_assets/sentiment_chart_2.png")
+
+elif section == "Regulation":
     st.subheader("Regulation and Consumer Protection")
-    st.write(
-        """
-        Block faced heightened regulatory scrutiny and responded with upgrades that emphasize trust and user protection,
-        including scam reimbursement, AI-powered fraud tools, and stricter identity verification and AML oversight.
-        """
-    )
-
-    st.markdown("### 2025 compliance and penalty overview")
     show_df = penalties_df.copy()
     show_df["Amount (USD)"] = show_df["Amount (USD)"].map(lambda x: f"${x:,.0f}")
     st.dataframe(show_df, use_container_width=True, hide_index=True)
 
-    st.markdown("### Consumer protection response highlights")
+    st.markdown("### What changed")
     st.write(
-        """
-        - Scam reimbursement program  
-        - AI-powered fraud detection and real-time monitoring  
-        - Transaction warnings before suspicious transfers  
-        - 24/7 support improvements  
-        - Enhanced identity verification and Bitcoin due diligence
-        """
+        "- Scam reimbursement and stronger fraud tooling\n"
+        "- Real-time monitoring and transaction warnings\n"
+        "- Enhanced identity verification and Bitcoin due diligence\n"
+        "- Independent oversight and tighter AML processes"
     )
-
-elif section == "Bitcoin Strategy":
-    st.subheader("Bitcoin Strategy")
-    st.write(
-        """
-        Block follows a Bitcoin-first approach and extends beyond trading into infrastructure and mining.
-        This creates optionality through vertical integration, but also introduces compliance and market-structure risk.
-        """
-    )
-
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("#### Potential upside")
-        st.write(
-            """
-            - Vertical integration across trading, custody, hardware, and mining  
-            - Lower execution and settlement costs for Cash App BTC flows  
-            - Differentiated positioning as a builder of Bitcoin rails
-            """
-        )
-    with c2:
-        st.markdown("#### Key risks")
-        st.write(
-            """
-            - Regulatory uncertainty and state-by-state licensing complexity  
-            - Higher compliance burden as scale increases  
-            - Strategic risk if the market rewards multi-chain ecosystems over Bitcoin-only
-            """
-        )
 
 elif section == "Key Takeaways":
     st.subheader("Key Takeaways")
     for t in takeaways:
         st.write(f"- {t}")
 
-elif section == "Project Files":
+elif section == "Downloads":
     st.subheader("Project Files")
-    st.write("If these files are in your repo root, you can access them here in the app.")
+    st.caption("Downloads only work if these files are in your repo root.")
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        file_badge(PDF_PATH, "Report")
-    with col2:
-        file_badge(PPT_PATH, "Slides")
-    with col3:
-        file_badge(NB_PATH, "Notebook")
-
-    st.markdown("### Downloads")
-    st.caption("Streamlit supports downloading local files using a download button.")
-
-    def add_download(path: Path, label: str):
+    def download_file(path: Path, label: str):
         if not path.exists():
-            st.info(f"{label} not found in app directory: {path.name}")
+            st.info(f"{label} not found: {path.name}")
             return
         with open(path, "rb") as f:
             st.download_button(
@@ -379,9 +235,9 @@ elif section == "Project Files":
                 use_container_width=True,
             )
 
-    add_download(PDF_PATH, "Report (PDF)")
-    add_download(PPT_PATH, "Slides (PPTX)")
-    add_download(NB_PATH, "Notebook (IPYNB)")
+    download_file(PDF_PATH, "Report (PDF)")
+    download_file(PPT_PATH, "Slides (PPTX)")
+    download_file(NB_PATH, "Notebook (IPYNB)")
 
 st.markdown("---")
-st.caption("Tip: Keep `readme_assets/sentiment_chart_1.png` and `readme_assets/sentiment_chart_2.png` in the repo so the charts render.")
+st.caption("Keep images in `readme_assets/` so they render quickly.")
