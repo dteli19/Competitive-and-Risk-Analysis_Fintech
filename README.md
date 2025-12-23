@@ -7,10 +7,10 @@ This project analyzes **Block, Inc. (NYSE: SQ)** as a hybrid fintech company ope
 ---
 
 ## Problem Statement  
-1. **Where does Block sit on the spectrum between traditional fintech and crypto-native firms?**  
-2. **How sensitive is Block to Bitcoin price movements (Bitcoin beta) and how does its volatility compare to peers?**  
-3. **Do Cash App user reviews indicate a competitive advantage in product experience and trust?**  
-4. **How do regulation and consumer protection shape Block’s strategic direction and risk profile?**
+1. Where does Block sit on the spectrum between traditional fintech and crypto-native firms?
+2. How sensitive is Block to Bitcoin price movements (Bitcoin beta) and how does its volatility compare to peers?  
+3. Do Cash App user reviews indicate a competitive advantage in product experience and trust?  
+4. How do regulation and consumer protection shape Block’s strategic direction and risk profile?
 
 ---
 
@@ -47,7 +47,7 @@ Bitcoin beta measures how much a stock’s returns move with Bitcoin returns (hi
 | **SQ** | ~0.15 to 0.20 | Meaningful BTC linkage, partially insulated by non-BTC revenue |
 | **PYPL** | ~0.0 | Mostly independent of BTC cycles |
 
-![](bets.png)
+![](Bets.png)
 
 ### Volatility positioning  
 | Asset | Relative volatility level | What it implies |
@@ -58,18 +58,17 @@ Bitcoin beta measures how much a stock’s returns move with Bitcoin returns (hi
 | **BTC** | Moderate-high | Crypto asset cyclicality |
 | **PYPL** | Lowest | Mature payments platform stability |
 
-![](volatility.png)
+![](Volatility.png)
 
 ---
 
 ## Cash App Sentiment Analysis (Google Play Reviews, 2023 to 2025)  
 We used a VADER-based NLP pipeline to measure sentiment from app reviews and compare Cash App against Google Pay, PayPal, Venmo, and Zelle.
 
-### Key charts  
 **Average VADER sentiment by app**  
 ![](VADER.png)
 
-### Summary table (from notebook outputs and report slide values)  
+### Summary table
 | App | Avg VADER (compound) | Positive % | Neutral % | Negative % |
 |---|---:|---:|---:|---:|
 | **Cash App** | ~0.37 | **72.65%** | ~14% | ~13% |
